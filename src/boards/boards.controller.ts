@@ -3,10 +3,23 @@ import { BoardsService } from './boards.service';
 import { CreateBoardDto } from "./dto/create-board.dto";
 import {BoardStatus} from "./board-status.enum";
 import {BoardStatusValidatorPipe} from "./pipe/board-status-validator.pipe";
+import {BoardEntity} from "./board.entity";
 
 @Controller('boards')
 export class BoardsController {
   constructor(private boardsService: BoardsService) {}
+
+  @Get('/:id')
+  getBoardById(@Param('id') id:number): Promise<BoardEntity> {
+    return this.boardsService.getBoardById(id);
+  }
+
+  @Post('/create')
+  @UsePipes(ValidationPipe)
+  createBoard(@Body() createBoardDto: CreateBoardDto): Promise<BoardEntity> {
+    return this.boardsService.createBoard(createBoardDto);
+  }
+
   //
   // @Get('/')
   // getAllBoards(): Array<Board> {
