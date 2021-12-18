@@ -11,6 +11,16 @@ export class BoardsService {
         @InjectRepository(BoardRepository)
         private boardRepository:BoardRepository
     ) {}
+
+    async getAllBoards(): Promise<Array<BoardEntity>>{
+        try{
+           return await this.boardRepository.find();
+        }catch(e){
+           console.log(e);
+           throw new Error(e);
+        }
+    }
+
     async getBoardById(id: number): Promise <BoardEntity> {
         try{
             const found = await this.boardRepository.findOne(id);

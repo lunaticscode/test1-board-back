@@ -9,6 +9,11 @@ import {BoardEntity} from "./board.entity";
 export class BoardsController {
   constructor(private boardsService: BoardsService) {}
 
+  @Get('/')
+  getAllBords(): Promise<Array<BoardEntity>>{
+    return this.boardsService.getAllBoards();
+  }
+
   @Get('/:id')
   getBoardById(@Param('id') id:number): Promise<BoardEntity> {
     return this.boardsService.getBoardById(id);
