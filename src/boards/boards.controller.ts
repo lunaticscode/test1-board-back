@@ -37,6 +37,14 @@ export class BoardsController {
     return this.boardsService.createBoard(createBoardDto);
   }
 
+  @Patch('/:id/status')
+  updateBoardStatus(
+      @Param('id', ParseIntPipe) id: number,
+      @Body('status', BoardStatusValidatorPipe) status: BoardStatus
+  ): Promise<BoardEntity>{
+      return this.boardsService.updateBoardStatus(id, status);
+  }
+
   @Delete('/:id')
   deleteBoard(@Param('id', ParseIntPipe) id: number): any | null {
       return this.boardsService.deleteBoard(id);

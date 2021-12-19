@@ -49,11 +49,26 @@ export class BoardsService {
     }
 
     async deleteBoard(id: number): Promise<boolean> {
-        const result = await this.boardRepository.delete(id);
-        if(result.affected === 0){
-            throw new NotFoundException(`Can't find Board with id ${id}`);
+        try{
+            const result = await this.boardRepository.delete(id);
+            if(result.affected === 0){
+                throw new NotFoundException(`Can't find Board with id ${id}`);
+            }
+            return true;
+        }catch(e){
+            console.log(e); throw new Error(e);
         }
-        return true;
+    }
+
+    async updateBoardStatus(id: number, status: BoardStatus):Promise<BoardEntity> {
+        try{
+            const board = await this.getBoardById(id);
+            board.status = status;
+            await this.boardRepository.save(board);
+            return board;
+        }catch(e){
+            console.log(e); throw new Error(e);
+        }
     }
   // private boards: Array<Board> = [];
   //
