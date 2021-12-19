@@ -47,6 +47,14 @@ export class BoardsService {
             console.log(e); throw new Error(e);
         }
     }
+
+    async deleteBoard(id: number): Promise<boolean> {
+        const result = await this.boardRepository.delete(id);
+        if(result.affected === 0){
+            throw new NotFoundException(`Can't find Board with id ${id}`);
+        }
+        return true;
+    }
   // private boards: Array<Board> = [];
   //
   // getAllBoards(): Array<Board> | [] {
